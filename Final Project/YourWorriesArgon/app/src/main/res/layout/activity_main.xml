@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,22 +8,41 @@
     tools:context="com.example.naveen.yourworriesargon.MainActivity">
 
     <EditText
+        android:id="@+id/userInput"
         android:layout_width="match_parent"
         android:layout_height="69dp"
-        android:layout_margin="16dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp" />
 
     <Button
+        android:id="@+id/getProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_below="@+id/userInput"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:text="Get PRODUCTS"
-        />
+        android:layout_marginTop="16dp"
+        android:text="GET PRODUCT" />
 
     <TextView
+        android:id="@+id/product"
         android:layout_width="match_parent"
         android:layout_height="61dp"
-        android:layout_margin="16dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/getProduct"
+        android:layout_marginTop="35dp"
         android:gravity="center" />
 
-</LinearLayout>
+    <Button
+        android:id="@+id/reset"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/product"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:text="RESET" />
+
+</RelativeLayout>
