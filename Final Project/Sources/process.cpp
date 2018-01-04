@@ -65,7 +65,8 @@ int main()
         count%=4;
     }
     fclose(output);
-    output= fopen("reactions.txt","w");
+    ofstream outfile;
+    outfile.open("reactions.txt",ios_base::app);
     while(fscanf(input,"%[^\n]%*c",s)==1){
         vector <string> reactants,products;
         vector <int> nor,nop;
@@ -89,25 +90,72 @@ int main()
                     if(reactant[i]=='(')countleftB++;
                     if(reactant[i]==')')countrightB++;
                     if(countleftB==countrightB)break;
+                    if(reactant[i]!=' ')
                     reactantname+=reactant[i];
                     i++;
                 }
                 int tempN=convertToNumber(temp);
-
-                //cout<<temp<<endl;
+                if(!tempN)tempN=1;
                 //cout<<tempN<<reactantname<<endl;
+                reactants.pb(reactantname);
+                nor.pb(tempN);
                 temp="";
             }
             else
             {
                 temp+= reactant[i];
             }
-        }        
+        }
+        f(i,product.length()){
+            if(product[i]==' ')continue;
+            string productname="";
+            if(product[i]=='('){
+                i++;
+                int countleftB=1,countrightB=0;
+                while(countleftB!=countrightB){
+                    if(product[i]=='(')countleftB++;
+                    if(product[i]==')')countrightB++;
+                    if(countleftB==countrightB)break;
+                    if(product[i]!=' ')
+                    productname+=product[i];
+                    i++;
+                }
+                int tempN=convertToNumber(temp);
+                if(!tempN)tempN=1;
+                //cout<<tempN<<productname<<endl;
+                products.pb(productname);
+                nop.pb(tempN);
+                temp="";
+            }
+            else
+            {
+                temp+= product[i];
+            }
+        }
+        vector <string> t=reactants;
+        sort(t.begin(),t.end());
+        if(reactions.find(t)==reactions.end()){
+            cout<<"rr\n";
+            int rs=reactants.size(),ps=products.size();
+            
+            f(i,rs){
+                outfile<<reactants[i]<<" ";
+            }
+            outfile<<endl;
+            f(i,rs){
+                outfile<<nor[i]<<" ";
+            }
+            outfile<<endl;
+            f(i,ps){
+                outfile<<products[i]<<" ";
+            }
+            outfile<<endl;
+            f(i,ps){
+                outfile<<nop[i]<<" ";
+            }
+	    outfile<<endl;
+        }
     }
-    
     fclose(input);
-    fclose(output);
-        
-
 	return 0;
 }
