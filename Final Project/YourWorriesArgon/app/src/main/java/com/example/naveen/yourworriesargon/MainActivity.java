@@ -130,7 +130,9 @@ public class MainActivity extends AppCompatActivity {
                     if(userInput.charAt(it)=='(')countleftB++;
                     if(userInput.charAt(it)==')')countrightB++;
                     if(countleftB==countrightB)break;
-                    reactantname+=userInput.charAt(it++);
+                    Character c=userInput.charAt(it++);
+                    if(c!=' ')
+                    reactantname+=c;
                 }
                 Integer tempN=convertToNumber(temp);
                 if(tempN==0)tempN=1;

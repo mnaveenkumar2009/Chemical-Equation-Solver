@@ -12,70 +12,102 @@ using namespace std;
 #define ll long long
 #define gc getchar
 #define pc putchar
-inline unsigned long long uscan()
-{
-    unsigned long long n=0,c=gc();
-while(c<'0'||c>'9')
-c=gc();
-while(c<='9'&&c>='0'){
-n=n*10+c-'0';
-c=gc();}
-return n;
-}
- 
-inline long int lscan()                 
-{
-    long int n=0,c=gc();
-while(c<'0'||c>'9')
-c=gc();
-while(c<='9'&&c>='0'){
-n=n*10+c-'0';
-c=gc();}
-return n;
-}
- 
- 
-inline  int sscan()                     
-{register  int n=0,c=gc();
-while(c<'0'||c>'9')
-c=gc();
-while(c<='9'&&c>='0')
+int convertToNumber(string number){
+    if(number=="")return 0;
+    int ans=0,i=0;
+    char c=number[i++];
+    while(c<'0'||c>'9')
+        if(i==number.length())
+            return 0;
+        else
+            c=number[i++];
+    while(c<='9'&&c>='0')
     {
-n=n*10+c-'0';
-c=gc();
+        ans=ans*10+c-'0';
+        if(i==number.length())return ans;
+        c=number[i++];
     }
-return n;
+    return ans;
 }
 
 int main()
 {
-    int i,id=0;
-    
-    string s;
-    while(!cin.eof()){
-        i=0;
+    FILE * input;
+    input=fopen("source.txt","r");
+    FILE * output;
+    output= fopen("reactions.txt","r");
+    char s[1000];
+    int count=0;
+    set<vector <string> > reactions;
+
+    while(fscanf(output,"%[^\n]%*c",s)==1){
+
+        if(!count){
+            vector <string> temp;
+            string ss;
+            int i,n=strlen(s);
+            f(i,n){
+                if(s[i]!=' ')
+                ss.pb(s[i]);
+                else
+                {
+                    if(ss.length()!=0)
+                    temp.pb(ss);
+                    ss.erase(ss.begin(),ss.end());
+                }
+            }
+	        if(ss.length()!=0)
+                temp.pb(ss);	
+            sort(temp.begin(),temp.end());
+            reactions.insert(temp);
+        }
+        count++;
+        count%=4;
+    }
+    fclose(output);
+    output= fopen("reactions.txt","w");
+    while(fscanf(input,"%[^\n]%*c",s)==1){
         vector <string> reactants,products;
         vector <int> nor,nop;
-        cin>>s;
+        int i=0;
         string reactant,product;
         while(s[i]!='=')
             if(s[i]!=' ')
                 reactant.pb(s[i++]);   
-        while(i!=s.length()-1)
+        while(i!=strlen(s)-1)
             if(s[i]!=' ')
                 product.pb(s[++i]);
-        //cout<<reactant<<endl<<product<<endl;
-        string number;
+                
+        string temp="";
         f(i,reactant.length()){
             if(reactant[i]==' ')continue;
-            string reactantname;
+            string reactantname="";
             if(reactant[i]=='('){
                 i++;
-                while(reactant[i]!=')'){
-                    reactantname.pb(reactant[i++]);
+                int countleftB=1,countrightB=0;
+                while(countleftB!=countrightB){
+                    if(reactant[i]=='(')countleftB++;
+                    if(reactant[i]==')')countrightB++;
+                    if(countleftB==countrightB)break;
+                    reactantname+=reactant[i];
+                    i++;
                 }
+                int tempN=convertToNumber(temp);
+
+                //cout<<temp<<endl;
+                //cout<<tempN<<reactantname<<endl;
+                temp="";
             }
-        }
+            else
+            {
+                temp+= reactant[i];
+            }
+        }        
     }
+    
+    fclose(input);
+    fclose(output);
+        
+
 	return 0;
 }
